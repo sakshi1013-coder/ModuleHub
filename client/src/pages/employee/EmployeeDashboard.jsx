@@ -33,56 +33,56 @@ const EmployeeDashboard = () => {
     return (
         <DashboardLayout Sidebar={EmployeeSidebar}>
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Developer Workspace</h1>
-                <p className="text-slate-400">Explore libraries and stay updated.</p>
+                <h1 className="text-3xl font-bold text-midnight mb-2">Developer Workspace</h1>
+                <p className="text-midnight/70">Explore libraries and stay updated.</p>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div className="glass-card p-6 rounded-xl border border-slate-800 bg-slate-900/50">
-                    <h3 className="text-slate-400 text-sm font-medium mb-1">Available Packages</h3>
-                    <p className="text-3xl font-bold text-blue-400">{packages.length}</p>
+                <div className="glass-card p-6 rounded-xl border border-celeste bg-white">
+                    <h3 className="text-midnight/60 text-sm font-medium mb-1">Available Packages</h3>
+                    <p className="text-3xl font-bold text-midnight">{packages.length}</p>
                 </div>
-                <div className="glass-card p-6 rounded-xl border border-slate-800 bg-slate-900/50">
-                    <h3 className="text-slate-400 text-sm font-medium mb-1">My Subscriptions</h3>
-                    <p className="text-3xl font-bold text-pink-400">{subscriptions.length}</p>
+                <div className="glass-card p-6 rounded-xl border border-celeste bg-white">
+                    <h3 className="text-midnight/60 text-sm font-medium mb-1">My Subscriptions</h3>
+                    <p className="text-3xl font-bold text-midnight">{subscriptions.length}</p>
                 </div>
             </div>
 
             {/* Packages List */}
             <div>
-                <h2 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
-                    <Package className="text-blue-500" size={24} />
+                <h2 className="text-xl font-bold text-midnight mb-6 flex items-center gap-2">
+                    <Package className="text-midnight" size={24} />
                     Latest Packages
                 </h2>
 
                 {loading ? (
-                    <div className="text-slate-400">Loading packages...</div>
+                    <div className="text-midnight/60">Loading packages...</div>
                 ) : packages.length === 0 ? (
-                    <div className="p-8 border border-dashed border-slate-800 rounded-xl text-center text-slate-500">
+                    <div className="p-8 border border-dashed border-celeste rounded-xl text-center text-midnight/60 bg-white">
                         No packages published yet.
                     </div>
                 ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {packages.map(pkg => (
-                            <div key={pkg._id} className="glass-card p-6 rounded-xl border border-slate-800 bg-slate-900/50 hover:bg-slate-800/50 transition-colors group">
+                            <div key={pkg._id} className="glass-card p-6 rounded-xl border border-celeste bg-white hover:bg-celeste/10 transition-colors group">
                                 <div className="flex justify-between items-start mb-4">
-                                    <div className="bg-blue-500/10 p-3 rounded-lg text-blue-400">
+                                    <div className="bg-celeste/30 p-3 rounded-lg text-midnight">
                                         <Package size={24} />
                                     </div>
-                                    <span className="text-xs bg-slate-800 text-slate-300 px-2 py-1 rounded-full border border-slate-700">
+                                    <span className="text-xs bg-celeste/30 text-midnight px-2 py-1 rounded-full border border-celeste">
                                         v{pkg.currentVersion}
                                     </span>
                                 </div>
-                                <h3 className="text-xl font-bold text-white mb-2 group-hover:text-blue-400 transition-colors">{pkg.name}</h3>
-                                <p className="text-slate-400 text-sm mb-4 line-clamp-2 h-10">{pkg.description}</p>
+                                <h3 className="text-xl font-bold text-midnight mb-2 group-hover:text-midnight-600 transition-colors">{pkg.name}</h3>
+                                <p className="text-midnight/70 text-sm mb-4 line-clamp-2 h-10">{pkg.description}</p>
 
-                                <div className="flex items-center justify-between mt-4 pt-4 border-t border-slate-800">
-                                    <span className="text-xs text-slate-500 flex items-center gap-1">
+                                <div className="flex items-center justify-between mt-4 pt-4 border-t border-celeste">
+                                    <span className="text-xs text-midnight/60 flex items-center gap-1">
                                         <Clock size={12} />
                                         {new Date(pkg.updatedAt).toLocaleDateString()}
                                     </span>
-                                    <Link to={`/packages/${pkg._id}`} className="text-sm font-medium text-blue-400 flex items-center gap-1 hover:gap-2 transition-all">
+                                    <Link to={`/packages/${pkg._id}`} className="text-sm font-medium text-midnight flex items-center gap-1 hover:gap-2 transition-all">
                                         View Docs <ArrowRight size={14} />
                                     </Link>
                                 </div>

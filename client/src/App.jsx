@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import ComponentDetail from './pages/ComponentDetail';
 import Search from './pages/Search';
+import Docs from './pages/Docs';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastContainer } from './components/NotificationToast';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -32,12 +33,13 @@ const DashboardRedirect = () => {
 function App() {
   return (
     <AuthProvider>
-      <div className="min-h-screen bg-slate-950 text-white font-sans selection:bg-blue-500/30">
+      <div className="min-h-screen bg-lionsmane text-midnight font-sans selection:bg-marigold/30">
         <Navbar />
         <div className="relative z-10">
           <Routes>
             {/* Public Routes */}
             <Route path="/" element={<Home />} />
+            <Route path="/docs" element={<Docs />} />
             <Route path="/login" element={<div className="container mx-auto px-4 py-8"><Login /></div>} />
             <Route path="/signup" element={<div className="container mx-auto px-4 py-8"><Signup /></div>} />
 

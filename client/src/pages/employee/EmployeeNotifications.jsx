@@ -64,32 +64,32 @@ const EmployeeNotifications = () => {
         <DashboardLayout Sidebar={EmployeeSidebar}>
             <div className="flex justify-between items-end mb-8">
                 <div>
-                    <h1 className="text-3xl font-bold text-white mb-2">Notifications</h1>
-                    <p className="text-slate-400">Stay updated with latest releases.</p>
+                    <h1 className="text-3xl font-bold text-midnight mb-2">Notifications</h1>
+                    <p className="text-midnight/70">Stay updated with latest releases.</p>
                 </div>
-                <button onClick={handleMarkRead} className="text-sm text-blue-400 hover:text-blue-300 flex items-center gap-2">
+                <button onClick={handleMarkRead} className="text-sm text-midnight hover:text-midnight-600 flex items-center gap-2">
                     <Check size={16} /> Mark all read
                 </button>
             </div>
 
-            <div className="glass-card rounded-xl border border-slate-800 bg-slate-900/50 overflow-hidden">
+            <div className="glass-card rounded-xl border border-celeste bg-white overflow-hidden">
                 {loading ? (
-                    <div className="p-8 text-center text-slate-500">Loading notifications...</div>
+                    <div className="p-8 text-center text-midnight/60">Loading notifications...</div>
                 ) : notifications.length === 0 ? (
-                    <div className="p-8 text-center text-slate-500">No new notifications.</div>
+                    <div className="p-8 text-center text-midnight/60">No new notifications.</div>
                 ) : (
-                    <div className="divide-y divide-slate-800">
+                    <div className="divide-y divide-celeste">
                         {notifications.map(notif => (
-                            <div key={notif._id} className={`p-4 flex items-start gap-4 hover:bg-slate-800/30 transition-colors ${!notif.read ? 'bg-blue-500/5' : ''}`}>
-                                <div className={`p-2 rounded-full mt-1 ${!notif.read ? 'text-blue-400 bg-blue-500/10' : 'text-slate-500 bg-slate-800'}`}>
+                            <div key={notif._id} className={`p-4 flex items-start gap-4 hover:bg-celeste/10 transition-colors ${!notif.read ? 'bg-midnight/5' : ''}`}>
+                                <div className={`p-2 rounded-full mt-1 ${!notif.read ? 'text-midnight bg-midnight/10' : 'text-midnight/50 bg-celeste/30'}`}>
                                     <Bell size={18} />
                                 </div>
                                 <div>
-                                    <h4 className={`text-sm ${!notif.read ? 'font-bold text-white' : 'font-medium text-slate-300'}`}>
+                                    <h4 className={`text-sm ${!notif.read ? 'font-bold text-midnight' : 'font-medium text-midnight/70'}`}>
                                         {notif.title}
                                     </h4>
-                                    <p className="text-sm text-slate-400 mt-1">{notif.message}</p>
-                                    <span className="text-xs text-slate-600 mt-2 block">
+                                    <p className="text-sm text-midnight/70 mt-1">{notif.message}</p>
+                                    <span className="text-xs text-midnight/50 mt-2 block">
                                         {new Date(notif.createdAt).toLocaleString()}
                                     </span>
                                 </div>

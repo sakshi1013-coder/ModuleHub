@@ -53,22 +53,22 @@ const PublishVersion = () => {
         <DashboardLayout Sidebar={CompanySidebar}>
             <div className="max-w-4xl mx-auto">
                 <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-white mb-2">Publish New Version</h1>
-                    <p className="text-slate-400">Release an update to an existing package.</p>
+                    <h1 className="text-3xl font-bold text-midnight mb-2">New Version</h1>
+                    <p className="text-midnight/70">Release an update to an existing package.</p>
                 </div>
 
-                <div className="glass-card p-8 rounded-2xl border border-slate-800 bg-slate-900/50">
+                <div className="glass-card p-8 rounded-2xl border border-celeste bg-white">
                     <form onSubmit={handleSubmit} className="space-y-6">
 
                         <div>
-                            <label className="block text-xs font-medium text-slate-400 uppercase mb-2">Select Package</label>
+                            <label className="block text-xs font-medium text-midnight/60 uppercase mb-2">Select Package</label>
                             <div className="relative">
-                                <Package className="absolute left-3 top-3 text-slate-500" size={18} />
+                                <Package className="absolute left-3 top-3 text-midnight/50" size={18} />
                                 <select
                                     name="packageId"
                                     value={formData.packageId}
                                     onChange={handleChange}
-                                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-10 pr-4 py-2.5 text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500 outline-none appearance-none"
+                                    className="w-full bg-white border border-celeste rounded-lg pl-10 pr-4 py-2.5 text-midnight placeholder-midnight/40 focus:ring-2 focus:ring-midnight outline-none appearance-none"
                                     required
                                 >
                                     <option value="">-- Choose a Package --</option>
@@ -82,15 +82,15 @@ const PublishVersion = () => {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-medium text-slate-400 uppercase mb-2">New Version Number</label>
+                            <label className="block text-xs font-medium text-midnight/60 uppercase mb-2">New Version Number</label>
                             <div className="relative">
-                                <FileCode className="absolute left-3 top-3 text-slate-500" size={18} />
+                                <FileCode className="absolute left-3 top-3 text-midnight/50" size={18} />
                                 <input
                                     type="text"
                                     name="version"
                                     value={formData.version}
                                     onChange={handleChange}
-                                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-10 pr-4 py-2.5 text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    className="w-full bg-white border border-celeste rounded-lg pl-10 pr-4 py-2.5 text-midnight placeholder-midnight/40 focus:ring-2 focus:ring-midnight outline-none"
                                     placeholder="e.g. 1.1.0"
                                     required
                                 />
@@ -98,15 +98,15 @@ const PublishVersion = () => {
                         </div>
 
                         <div>
-                            <label className="block text-xs font-medium text-slate-400 uppercase mb-2">Changelog / Update Message</label>
+                            <label className="block text-xs font-medium text-midnight/60 uppercase mb-2">Changelog / Update Message</label>
                             <div className="relative">
-                                <History className="absolute left-3 top-3 text-slate-500" size={18} />
+                                <History className="absolute left-3 top-3 text-midnight/50" size={18} />
                                 <textarea
                                     name="changelog"
                                     value={formData.changelog}
                                     onChange={handleChange}
                                     rows={4}
-                                    className="w-full bg-slate-800/50 border border-slate-700 rounded-lg pl-10 pr-4 py-2.5 text-white placeholder-slate-600 focus:ring-2 focus:ring-blue-500 outline-none"
+                                    className="w-full bg-white border border-celeste rounded-lg pl-10 pr-4 py-2.5 text-midnight placeholder-midnight/40 focus:ring-2 focus:ring-midnight outline-none"
                                     placeholder="What's new in this version?"
                                     required
                                 />
@@ -117,7 +117,7 @@ const PublishVersion = () => {
                             <button
                                 type="submit"
                                 disabled={loading || fetching}
-                                className="bg-green-600 hover:bg-green-500 text-white font-medium py-2.5 px-8 rounded-lg transition-all flex items-center gap-2 shadow-lg shadow-green-500/20"
+                                className="bg-herb hover:bg-herb-600 text-white font-medium py-2.5 px-8 rounded-lg transition-all flex items-center gap-2 shadow-lg shadow-herb/20"
                             >
                                 {loading ? <Loader className="animate-spin" size={20} /> : 'Release Update'}
                             </button>

@@ -6,11 +6,11 @@ const DashboardLayout = ({ Sidebar, children }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen bg-slate-950 text-white pt-16">
+        <div className="flex min-h-screen bg-lionsmane text-midnight pt-16">
             {/* Mobile Sidebar Toggle */}
             <button
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden fixed bottom-4 right-4 z-50 bg-blue-600 p-3 rounded-full shadow-lg"
+                className="lg:hidden fixed bottom-4 right-4 z-50 bg-midnight p-3 rounded-full shadow-lg text-white"
             >
                 <Menu />
             </button>
@@ -23,13 +23,13 @@ const DashboardLayout = ({ Sidebar, children }) => {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -300, opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-slate-900 border-r border-slate-800 p-4 transform lg:transform-none pt-20 lg:pt-4 overflow-y-auto block`}
+                        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-celeste p-4 transform lg:transform-none pt-20 lg:pt-4 overflow-y-auto block shadow-sm`}
                         style={{ display: isSidebarOpen ? 'block' : undefined }} // Hydration fix helper
                     >
                         {/* Close Button Mobile */}
                         <button
                             onClick={() => setSidebarOpen(false)}
-                            className="lg:hidden absolute top-4 right-4 text-slate-400"
+                            className="lg:hidden absolute top-4 right-4 text-midnight/60"
                         >
                             <X />
                         </button>
@@ -40,7 +40,7 @@ const DashboardLayout = ({ Sidebar, children }) => {
             </AnimatePresence>
 
             {/* Main Content */}
-            <main className="flex-1 p-6 lg:p-10 overflow-x-hidden">
+            <main className="flex-1 p-6 lg:p-10 overflow-x-hidden bg-lionsmane">
                 {children}
             </main>
 

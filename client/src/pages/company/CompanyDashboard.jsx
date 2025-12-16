@@ -56,73 +56,73 @@ const CompanyDashboard = () => {
     return (
         <DashboardLayout Sidebar={CompanySidebar}>
             <div className="mb-8">
-                <h1 className="text-3xl font-bold text-white mb-2">Company Dashboard</h1>
-                <p className="text-slate-400">Manage your company's internal packages and releases.</p>
+                <h1 className="text-3xl font-bold text-midnight mb-2">Company Dashboard</h1>
+                <p className="text-midnight/70">Manage your company's internal packages and releases.</p>
             </div>
 
             {/* Quick Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="glass-card p-6 rounded-xl border border-slate-800 bg-slate-900/50">
-                    <h3 className="text-slate-400 text-sm font-medium mb-1">Total Packages</h3>
-                    <p className="text-3xl font-bold text-blue-400">{loading ? '-' : stats.totalPackages}</p>
+                <div className="glass-card p-6 rounded-xl border border-celeste bg-white">
+                    <h3 className="text-midnight/60 text-sm font-medium mb-1">Total Packages</h3>
+                    <p className="text-3xl font-bold text-midnight">{loading ? '-' : stats.totalPackages}</p>
                 </div>
-                <div className="glass-card p-6 rounded-xl border border-slate-800 bg-slate-900/50">
-                    <h3 className="text-slate-400 text-sm font-medium mb-1">Total Employees</h3>
-                    <p className="text-3xl font-bold text-green-400">{loading ? '-' : stats.totalEmployees}</p>
+                <div className="glass-card p-6 rounded-xl border border-celeste bg-white">
+                    <h3 className="text-midnight/60 text-sm font-medium mb-1">Total Employees</h3>
+                    <p className="text-3xl font-bold text-herb">{loading ? '-' : stats.totalEmployees}</p>
                 </div>
-                <div className="glass-card p-6 rounded-xl border border-slate-800 bg-slate-900/50">
-                    <h3 className="text-slate-400 text-sm font-medium mb-1">Recent Updates (7d)</h3>
-                    <p className="text-3xl font-bold text-purple-400">{loading ? '-' : stats.recentUpdates}</p>
+                <div className="glass-card p-6 rounded-xl border border-celeste bg-white">
+                    <h3 className="text-midnight/60 text-sm font-medium mb-1">Recent Updates (7d)</h3>
+                    <p className="text-3xl font-bold text-marigold">{loading ? '-' : stats.recentUpdates}</p>
                 </div>
             </div>
 
             {/* Quick Actions */}
             <div className="flex gap-4 mb-8">
-                <Link to="/company/dashboard/publish" className="flex items-center gap-2 bg-blue-600 hover:bg-blue-500 text-white px-6 py-3 rounded-lg transition-all font-medium shadow-lg shadow-blue-500/20">
+                <Link to="/company/dashboard/publish" className="flex items-center gap-2 bg-midnight hover:bg-midnight-600 text-white px-6 py-3 rounded-lg transition-all font-medium shadow-lg shadow-midnight/20">
                     <Upload size={20} />
                     Publish New Package
                 </Link>
             </div>
 
             {/* Package Overview */}
-            <div className="glass-card rounded-xl border border-slate-200 bg-white/80 overflow-hidden shadow-xl">
-                <div className="p-6 border-b border-slate-200">
-                    <h3 className="text-lg font-bold text-slate-900">Your Packages</h3>
+            <div className="glass-card rounded-xl border border-celeste bg-white overflow-hidden shadow-xl">
+                <div className="p-6 border-b border-celeste">
+                    <h3 className="text-lg font-bold text-midnight">Your Packages</h3>
                 </div>
 
                 {loading ? (
-                    <div className="p-8 text-center text-slate-500">Loading packages...</div>
+                    <div className="p-8 text-center text-midnight/60">Loading packages...</div>
                 ) : packages.length === 0 ? (
                     <div className="p-12 text-center">
-                        <Package size={48} className="mx-auto text-slate-300 mb-4" />
-                        <h3 className="text-lg font-medium text-slate-900 mb-1">No packages yet</h3>
-                        <p className="text-slate-500 mb-6">Start by publishing your first package.</p>
-                        <Link to="/company/dashboard/publish" className="text-blue-600 hover:text-blue-500 font-medium">
+                        <Package size={48} className="mx-auto text-midnight/30 mb-4" />
+                        <h3 className="text-lg font-medium text-midnight mb-1">No packages yet</h3>
+                        <p className="text-midnight/60 mb-6">Start by publishing your first package.</p>
+                        <Link to="/company/dashboard/publish" className="text-midnight hover:text-midnight-600 font-medium">
                             Publish Now &rarr;
                         </Link>
                     </div>
                 ) : (
-                    <div className="divide-y divide-slate-100">
+                    <div className="divide-y divide-celeste">
                         {packages.map(pkg => (
-                            <div key={pkg._id} className="p-6 hover:bg-slate-50 transition-colors flex items-center justify-between group">
+                            <div key={pkg._id} className="p-6 hover:bg-celeste/10 transition-colors flex items-center justify-between group">
                                 <div className="flex items-start gap-4">
-                                    <div className="bg-blue-100 p-3 rounded-lg text-blue-600 mt-1">
+                                    <div className="bg-celeste/30 p-3 rounded-lg text-midnight mt-1">
                                         <Package size={20} />
                                     </div>
                                     <div>
-                                        <h4 className="text-base font-bold text-slate-900 mb-1 flex items-center gap-2">
+                                        <h4 className="text-base font-bold text-midnight mb-1 flex items-center gap-2">
                                             {pkg.name}
-                                            <span className="text-xs bg-slate-100 text-slate-600 px-2 py-0.5 rounded-full border border-slate-200">v{pkg.currentVersion}</span>
+                                            <span className="text-xs bg-celeste/30 text-midnight px-2 py-0.5 rounded-full border border-celeste">v{pkg.currentVersion}</span>
                                         </h4>
-                                        <p className="text-sm text-slate-500 line-clamp-1 max-w-md">{pkg.description}</p>
-                                        <div className="flex items-center gap-4 mt-3 text-xs text-slate-400">
+                                        <p className="text-sm text-midnight/70 line-clamp-1 max-w-md">{pkg.description}</p>
+                                        <div className="flex items-center gap-4 mt-3 text-xs text-midnight/60">
                                             <span className="flex items-center gap-1"><Clock size={12} /> Updated {new Date(pkg.updatedAt).toLocaleDateString()}</span>
                                             <span className="flex items-center gap-1"><Shield size={12} /> {pkg.license || 'MIT'}</span>
                                         </div>
                                     </div>
                                 </div>
                                 <div className="opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <Link to={`/company/dashboard/publish/${pkg._id}/version`} className="text-sm border border-slate-300 rounded-lg px-3 py-1.5 text-slate-600 hover:text-blue-600 hover:border-blue-300 hover:bg-blue-50 transition-all">
+                                    <Link to={`/company/dashboard/publish/${pkg._id}/version`} className="text-sm border border-celeste rounded-lg px-3 py-1.5 text-midnight hover:text-midnight-600 hover:border-midnight hover:bg-midnight/5 transition-all">
                                         Release Update
                                     </Link>
                                 </div>

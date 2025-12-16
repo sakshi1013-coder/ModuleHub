@@ -7,23 +7,27 @@ const Home = () => {
     return (
         <div className="flex flex-col min-h-screen">
             {/* Hero Section */}
-            <section className="relative pt-32 pb-20 overflow-hidden">
-                {/* Background Glows */}
-                <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] -z-10">
-                    <div className="absolute inset-0 bg-blue-500/20 blur-[120px] rounded-full mix-blend-screen animate-pulse" style={{ animationDuration: '4s' }}></div>
-                    <div className="absolute bottom-0 right-0 w-3/4 h-3/4 bg-green-500/10 blur-[100px] rounded-full mix-blend-screen"></div>
+            <section className="relative pt-32 pb-20 overflow-hidden bg-lionsmane">
+                {/* Slow Pulsing Circle Background */}
+                <div className="absolute inset-0 overflow-hidden flex items-center justify-center pointer-events-none">
+                    <div
+                        className="w-[1200px] h-[1200px] bg-marigold/50 blur-[100px] rounded-full"
+                        style={{
+                            animation: 'slowPulse 10s ease-in-out infinite',
+                        }}
+                    ></div>
                 </div>
 
-                <div className="container mx-auto px-4 text-center z-10">
+                <div className="relative container mx-auto px-4 text-center z-10">
                     <motion.div
                         initial={{ opacity: 0, scale: 0.9 }}
                         animate={{ opacity: 1, scale: 1 }}
                         transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-slate-300 mb-8 hover:bg-white/10 transition-colors cursor-pointer"
+                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-celeste text-sm font-medium text-midnight mb-8 hover:bg-white transition-colors cursor-pointer shadow-sm"
                     >
                         <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-green-500"></span>
+                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-herb opacity-75"></span>
+                            <span className="relative inline-flex rounded-full h-2 w-2 bg-herb"></span>
                         </span>
                         v2.0 is now live
                         <ChevronRight size={14} />
@@ -32,7 +36,7 @@ const Home = () => {
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
-                        className="text-6xl md:text-7xl font-bold tracking-tight mb-8"
+                        className="text-6xl md:text-7xl font-bold tracking-tight mb-8 text-midnight"
                     >
                         Ship faster with <span className="text-gradient">confidence.</span>
                     </motion.h1>
@@ -41,7 +45,7 @@ const Home = () => {
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed"
+                        className="text-xl text-midnight/70 mb-12 max-w-2xl mx-auto leading-relaxed"
                     >
                         The internal registry for high-quality, secure, and versioned components.
                         Empower your engineering team to build consistent software at scale.
@@ -66,13 +70,13 @@ const Home = () => {
             </section>
 
             {/* Brands / Social Proof (Placeholder style) */}
-            <div className="border-y border-white/5 bg-white/5 backdrop-blur-sm">
+            <div className="border-y border-celeste bg-white/50 backdrop-blur-sm">
                 <div className="container mx-auto px-4 py-8">
-                    <p className="text-center text-sm font-medium text-slate-500 mb-6 uppercase tracking-wider">Trusted by modern engineering teams</p>
-                    <div className="flex flex-wrap justify-center gap-12 opacity-50 grayscale hover:grayscale-0 transition-all duration-500">
+                    <p className="text-center text-sm font-medium text-midnight/60 mb-6 uppercase tracking-wider">Trusted by modern engineering teams</p>
+                    <div className="flex flex-wrap justify-center gap-12 opacity-60 grayscale hover:grayscale-0 transition-all duration-500">
                         {/* Placeholder logos using text for now */}
                         {['Acme Corp', 'GlobalTech', 'Nebula', 'Vertex', 'Horizon'].map((brand) => (
-                            <span key={brand} className="text-xl font-bold text-slate-300">{brand}</span>
+                            <span key={brand} className="text-xl font-bold text-midnight">{brand}</span>
                         ))}
                     </div>
                 </div>
@@ -81,66 +85,129 @@ const Home = () => {
             {/* Why ModuleHub */}
             <section className="py-24 relative">
                 <div className="container mx-auto px-4">
-                    <div className="text-center mb-16">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-6">Why ModuleHub?</h2>
-                        <p className="text-slate-400 text-lg max-w-2xl mx-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-16"
+                    >
+                        <h2 className="text-3xl md:text-5xl font-bold mb-6 text-midnight">Why ModuleHub?</h2>
+                        <p className="text-midnight/70 text-lg max-w-2xl mx-auto">
                             Stop reinventing the wheel. Centralize your logic and UI components to boost productivity and maintain consistency.
                         </p>
-                    </div>
+                    </motion.div>
 
                     <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        <FeatureCard
-                            icon={<Layers className="text-blue-400" />}
-                            title="Centralized Registry"
-                            desc="One source of truth for all your internal packages and UI components."
-                        />
-                        <FeatureCard
-                            icon={<Bell className="text-amber-400" />}
-                            title="Instant Notifications"
-                            desc="Real-time alerts via WebSockets when dependencies are updated."
-                        />
-                        <FeatureCard
-                            icon={<Shield className="text-green-400" />}
-                            title="Secure Management"
-                            desc="Role-based access control and vulnerability scanning built-in."
-                        />
-                        <FeatureCard
-                            icon={<Zap className="text-purple-400" />}
-                            title="Productivity Boost"
-                            desc="Reduce code duplication and ship features 2x faster."
-                        />
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: 0.1 }}
+                        >
+                            <FeatureCard
+                                icon={<Layers className="text-midnight" />}
+                                title="Centralized Registry"
+                                desc="One source of truth for all your internal packages and UI components."
+                            />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: 0.2 }}
+                        >
+                            <FeatureCard
+                                icon={<Bell className="text-marigold" />}
+                                title="Instant Notifications"
+                                desc="Real-time alerts via WebSockets when dependencies are updated."
+                            />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: 0.3 }}
+                        >
+                            <FeatureCard
+                                icon={<Shield className="text-herb" />}
+                                title="Secure Management"
+                                desc="Role-based access control and vulnerability scanning built-in."
+                            />
+                        </motion.div>
+                        <motion.div
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ duration: 0.5, delay: 0.4 }}
+                        >
+                            <FeatureCard
+                                icon={<Zap className="text-midnight" />}
+                                title="Productivity Boost"
+                                desc="Reduce code duplication and ship features 2x faster."
+                            />
+                        </motion.div>
                     </div>
                 </div>
             </section>
 
             {/* How It Works */}
-            <section className="py-24 bg-slate-900/30 border-y border-white/5">
+            <section className="py-24 bg-white/50 border-y border-celeste">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold text-center mb-16">How it works</h2>
+                    <motion.h2
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.6 }}
+                        className="text-3xl md:text-5xl font-bold text-center mb-16 text-midnight"
+                    >
+                        How it works
+                    </motion.h2>
 
                     <div className="relative">
                         {/* Connecting Line */}
-                        <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-blue-500/20 via-blue-500/50 to-blue-500/20"></div>
+                        <div className="hidden md:block absolute top-12 left-0 w-full h-0.5 bg-gradient-to-r from-celeste/30 via-celeste to-celeste/30"></div>
 
                         <div className="grid md:grid-cols-3 gap-12">
-                            <Step
-                                number="01"
-                                title="Publish Components"
-                                desc="Teams add internal React components, packages, or utilities directly from the CLI."
-                                icon={<Code2 size={24} className="text-blue-400" />}
-                            />
-                            <Step
-                                number="02"
-                                title="Track & Maintain"
-                                desc="ModuleHub automatically generates docs, version history, and dependency graphs."
-                                icon={<GitBranch size={24} className="text-blue-400" />}
-                            />
-                            <Step
-                                number="03"
-                                title="Notify Teams"
-                                desc="Developers get instant socket-based updates for new versions and critical patches."
-                                icon={<Bell size={24} className="text-blue-400" />}
-                            />
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.5, delay: 0.1 }}
+                            >
+                                <Step
+                                    number="01"
+                                    title="Publish Components"
+                                    desc="Teams add internal React components, packages, or utilities directly from the CLI."
+                                    icon={<Code2 size={24} className="text-midnight" />}
+                                />
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                            >
+                                <Step
+                                    number="02"
+                                    title="Track & Maintain"
+                                    desc="ModuleHub automatically generates docs, version history, and dependency graphs."
+                                    icon={<GitBranch size={24} className="text-midnight" />}
+                                />
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, y: 30 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: true, margin: "-50px" }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                            >
+                                <Step
+                                    number="03"
+                                    title="Notify Teams"
+                                    desc="Developers get instant socket-based updates for new versions and critical patches."
+                                    icon={<Bell size={24} className="text-midnight" />}
+                                />
+                            </motion.div>
                         </div>
                     </div>
                 </div>
@@ -149,17 +216,30 @@ const Home = () => {
             {/* Comparison Table */}
             <section className="py-24">
                 <div className="container mx-auto px-4">
-                    <h2 className="text-3xl md:text-5xl font-bold text-center mb-6">Why ModuleHub is better</h2>
-                    <p className="text-center text-slate-400 mb-16">Built specifically for component management, unlike generic git repositories.</p>
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.6 }}
+                    >
+                        <h2 className="text-3xl md:text-5xl font-bold text-center mb-6 text-midnight">Why ModuleHub is better</h2>
+                        <p className="text-center text-midnight/70 mb-16">Built specifically for component management, unlike generic git repositories.</p>
+                    </motion.div>
 
-                    <div className="overflow-x-auto">
+                    <motion.div
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true, margin: "-50px" }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="overflow-x-auto"
+                    >
                         <div className="glass-card rounded-2xl p-8 max-w-4xl mx-auto">
                             <table className="w-full text-left border-collapse">
                                 <thead>
-                                    <tr className="border-b border-white/10">
-                                        <th className="py-6 px-4 text-slate-400 font-medium">Feature</th>
-                                        <th className="py-6 px-4 text-white font-bold text-xl text-center">ModuleHub</th>
-                                        <th className="py-6 px-4 text-slate-500 font-medium text-center">Git Repos</th>
+                                    <tr className="border-b border-celeste">
+                                        <th className="py-6 px-4 text-midnight/60 font-medium">Feature</th>
+                                        <th className="py-6 px-4 text-midnight font-bold text-xl text-center">ModuleHub</th>
+                                        <th className="py-6 px-4 text-midnight/50 font-medium text-center">Git Repos</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -171,87 +251,110 @@ const Home = () => {
                                 </tbody>
                             </table>
                         </div>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* CTA / Contact */}
-            <section className="py-24 relative overflow-hidden">
-                <div className="absolute inset-0 bg-blue-600/5"></div>
+            <section className="py-24 relative overflow-hidden bg-celeste/20">
                 <div className="container mx-auto px-4 relative z-10 flex flex-col md:flex-row items-center justify-between gap-12 max-w-6xl">
-                    <div className="flex-1">
-                        <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to streamline your workflow?</h2>
-                        <p className="text-slate-400 text-lg mb-8">Join leading engineering teams who are shipping faster with ModuleHub. Start for free today.</p>
+                    <motion.div
+                        initial={{ opacity: 0, x: -30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.6 }}
+                        className="flex-1"
+                    >
+                        <h2 className="text-3xl md:text-5xl font-bold mb-6 text-midnight">Ready to streamline your workflow?</h2>
+                        <p className="text-midnight/70 text-lg mb-8">Join leading engineering teams who are shipping faster with ModuleHub. Start for free today.</p>
                         <div className="flex flex-col gap-4">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.2 }}
+                                className="flex items-center gap-3"
+                            >
+                                <div className="w-10 h-10 rounded-full bg-herb/20 flex items-center justify-center text-herb">
                                     <Check size={20} />
                                 </div>
-                                <span className="text-slate-300">Free for small teams</span>
-                            </div>
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-blue-500/20 flex items-center justify-center text-blue-400">
+                                <span className="text-midnight">Free for small teams</span>
+                            </motion.div>
+                            <motion.div
+                                initial={{ opacity: 0, x: -20 }}
+                                whileInView={{ opacity: 1, x: 0 }}
+                                viewport={{ once: true }}
+                                transition={{ duration: 0.5, delay: 0.3 }}
+                                className="flex items-center gap-3"
+                            >
+                                <div className="w-10 h-10 rounded-full bg-herb/20 flex items-center justify-center text-herb">
                                     <Check size={20} />
                                 </div>
-                                <span className="text-slate-300">Enterprise-grade security</span>
-                            </div>
+                                <span className="text-midnight">Enterprise-grade security</span>
+                            </motion.div>
                         </div>
-                    </div>
+                    </motion.div>
 
-                    <div className="flex-1 w-full max-w-md">
+                    <motion.div
+                        initial={{ opacity: 0, x: 30 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true, margin: "-100px" }}
+                        transition={{ duration: 0.6, delay: 0.2 }}
+                        className="flex-1 w-full max-w-md"
+                    >
                         <form className="glass-card p-8 rounded-2xl">
-                            <h3 className="text-2xl font-bold mb-6">Get in touch</h3>
+                            <h3 className="text-2xl font-bold mb-6 text-midnight">Get in touch</h3>
                             <div className="space-y-4">
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-400 mb-1">Full Name</label>
-                                    <input type="text" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="John Doe" />
+                                    <label className="block text-sm font-medium text-midnight/60 mb-1">Full Name</label>
+                                    <input type="text" className="w-full bg-white border border-celeste rounded-lg px-4 py-3 text-midnight focus:outline-none focus:border-midnight transition-colors" placeholder="John Doe" />
                                 </div>
                                 <div>
-                                    <label className="block text-sm font-medium text-slate-400 mb-1">Work Email</label>
-                                    <input type="email" className="w-full bg-slate-950 border border-slate-800 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-blue-500 transition-colors" placeholder="john@company.com" />
+                                    <label className="block text-sm font-medium text-midnight/60 mb-1">Work Email</label>
+                                    <input type="email" className="w-full bg-white border border-celeste rounded-lg px-4 py-3 text-midnight focus:outline-none focus:border-midnight transition-colors" placeholder="john@company.com" />
                                 </div>
                                 <button type="button" className="w-full btn-primary mt-2">Contact Sales</button>
                             </div>
                         </form>
-                    </div>
+                    </motion.div>
                 </div>
             </section>
 
             {/* Footer */}
-            <footer className="bg-slate-950 border-t border-white/5 py-12 text-slate-400">
+            <footer className="bg-white border-t border-celeste py-12 text-midnight/70">
                 <div className="container mx-auto px-4">
                     <div className="grid md:grid-cols-4 gap-12 mb-12">
                         <div className="col-span-1 md:col-span-2">
-                            <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-white mb-4">
-                                <Package size={24} className="text-blue-500" />
+                            <Link to="/" className="flex items-center gap-2 text-2xl font-bold text-midnight mb-4">
+                                <Package size={24} className="text-midnight" />
                                 <span>ModuleHub</span>
                             </Link>
-                            <p className="max-w-xs">The modern component registry for ambitious engineering teams.</p>
+                            <p className="max-w-xs text-midnight/70">The modern component registry for ambitious engineering teams.</p>
                         </div>
                         <div>
-                            <h4 className="text-white font-bold mb-4">Product</h4>
+                            <h4 className="text-midnight font-bold mb-4">Product</h4>
                             <ul className="space-y-2">
-                                <li><a href="#" className="hover:text-white transition-colors">Features</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Pricing</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Enterprise</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Changelog</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">Features</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">Pricing</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">Enterprise</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">Changelog</a></li>
                             </ul>
                         </div>
                         <div>
-                            <h4 className="text-white font-bold mb-4">Resources</h4>
+                            <h4 className="text-midnight font-bold mb-4">Resources</h4>
                             <ul className="space-y-2">
-                                <li><a href="#" className="hover:text-white transition-colors">Documentation</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">API Reference</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Community</a></li>
-                                <li><a href="#" className="hover:text-white transition-colors">Contact</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">Documentation</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">API Reference</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">Community</a></li>
+                                <li><a href="#" className="hover:text-midnight transition-colors">Contact</a></li>
                             </ul>
                         </div>
                     </div>
-                    <div className="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                    <div className="border-t border-celeste pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                         <p>© 2024 ModuleHub Inc. All rights reserved.</p>
                         <div className="flex gap-6">
-                            <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                            <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
+                            <a href="#" className="hover:text-midnight transition-colors">Privacy Policy</a>
+                            <a href="#" className="hover:text-midnight transition-colors">Terms of Service</a>
                         </div>
                     </div>
                 </div>
@@ -261,36 +364,36 @@ const Home = () => {
 };
 
 const FeatureCard = ({ icon, title, desc }) => (
-    <div className="glass-card p-6 rounded-2xl hover:bg-white/5 transition-colors group">
-        <div className="bg-slate-900 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-white/5">
+    <div className="glass-card p-6 rounded-2xl hover:bg-white transition-colors group">
+        <div className="bg-celeste/30 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300 border border-celeste">
             {icon}
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-        <p className="text-slate-400 leading-relaxed text-sm">{desc}</p>
+        <h3 className="text-xl font-bold text-midnight mb-2">{title}</h3>
+        <p className="text-midnight/70 leading-relaxed text-sm">{desc}</p>
     </div>
 );
 
 const Step = ({ number, title, desc, icon }) => (
     <div className="relative z-10 text-center">
-        <div className="bg-slate-950 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 border-4 border-slate-900 shadow-xl relative">
+        <div className="bg-white w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 border-4 border-celeste shadow-xl relative">
             {icon}
-            <div className="absolute -top-3 -right-3 bg-blue-600 text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-slate-900 text-white">
+            <div className="absolute -top-3 -right-3 bg-midnight text-xs font-bold w-6 h-6 rounded-full flex items-center justify-center border-2 border-white text-white">
                 {number}
             </div>
         </div>
-        <h3 className="text-xl font-bold text-white mb-2">{title}</h3>
-        <p className="text-slate-400 text-sm max-w-xs mx-auto">{desc}</p>
+        <h3 className="text-xl font-bold text-midnight mb-2">{title}</h3>
+        <p className="text-midnight/70 text-sm max-w-xs mx-auto">{desc}</p>
     </div>
 );
 
 const ComparisonRow = ({ feature, moduleHub, git }) => (
-    <tr className="border-b border-white/5 hover:bg-white/5 transition-colors">
-        <td className="py-4 px-4 text-white font-medium">{feature}</td>
+    <tr className="border-b border-celeste/30 hover:bg-celeste/10 transition-colors">
+        <td className="py-4 px-4 text-midnight font-medium">{feature}</td>
         <td className="py-4 px-4 text-center">
-            {moduleHub ? <Check className="inline text-green-400" size={20} /> : <span className="text-slate-600">-</span>}
+            {moduleHub ? <Check className="inline text-herb" size={20} /> : <span className="text-midnight/30">-</span>}
         </td>
         <td className="py-4 px-4 text-center">
-            {git ? <Check className="inline text-slate-500" size={20} /> : <span className="text-slate-600">-</span>}
+            {git ? <Check className="inline text-midnight/40" size={20} /> : <span className="text-midnight/30">-</span>}
         </td>
     </tr>
 )

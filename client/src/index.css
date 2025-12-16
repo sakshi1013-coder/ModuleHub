@@ -6,29 +6,48 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 font-sans;
+    @apply bg-lionsmane text-midnight font-sans;
     font-family: 'Inter', sans-serif;
   }
 }
 
 @layer utilities {
   .glass {
-    @apply bg-white/60 backdrop-blur-lg border border-white/40 shadow-sm;
+    @apply bg-white/70 backdrop-blur-lg border border-celeste/50 shadow-sm;
   }
 
   .glass-card {
-    @apply bg-white/80 backdrop-blur-md border border-slate-200 shadow-xl;
+    @apply bg-white/90 backdrop-blur-md border border-celeste shadow-xl;
   }
 
   .text-gradient {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-green-600;
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-midnight to-herb;
   }
 
   .btn-primary {
-    @apply px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white rounded-full font-medium hover:from-blue-500 hover:to-blue-400 transition-all duration-300 shadow-lg shadow-blue-500/20;
+    @apply px-6 py-3 bg-midnight text-white rounded-full font-medium hover:bg-midnight-600 transition-all duration-300 shadow-lg shadow-midnight/20;
   }
 
   .btn-secondary {
-    @apply px-6 py-3 bg-white text-slate-700 rounded-full font-medium hover:bg-slate-50 transition-all duration-300 border border-slate-200 shadow-sm;
+    @apply px-6 py-3 bg-white text-midnight rounded-full font-medium hover:bg-lionsmane transition-all duration-300 border border-celeste shadow-sm;
+  }
+
+  .btn-accent {
+    @apply px-6 py-3 bg-marigold text-white rounded-full font-medium hover:bg-marigold-600 transition-all duration-300 shadow-lg shadow-marigold/20;
+  }
+
+  .btn-herb {
+    @apply px-6 py-3 bg-herb text-white rounded-full font-medium hover:bg-herb-600 transition-all duration-300 shadow-lg shadow-herb/20;
+  }
+}
+
+@keyframes slowPulse {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.15);
   }
 }
