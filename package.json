@@ -1,22 +1,13 @@
 {
     "name": "modulehub-root",
     "private": true,
+    "engines": {
+        "node": "18.x"
+    },
     "scripts": {
         "install-client": "cd client && npm install",
         "install-server": "cd server && npm install",
         "build": "npm run install-client && npm run install-server && cd client && npm run build && mkdir -p ../dist && cp -r dist/* ../dist",
         "start": "node server/server.js"
-    },
-    "engines": {
-        "node": "18.x"
-    },
-    "dependencies": {
-        "bcryptjs": "^2.4.3",
-        "cors": "^2.8.5",
-        "dotenv": "^16.3.1",
-        "express": "^4.18.2",
-        "jsonwebtoken": "^9.0.2",
-        "mongoose": "^8.0.3",
-        "socket.io": "^4.8.1"
     }
 }

@@ -81,5 +81,4 @@ if (require.main === module) {
   server.listen(PORT, () => console.log(`Server running on port ${PORT} `));
 }
 
-// Export for Vercel
-module.exports = app;
+module.exports = { app, server }; // Export server for tests
