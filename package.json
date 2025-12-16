@@ -2,7 +2,7 @@
     "name": "modulehub-root",
     "private": true,
     "engines": {
-        "node": "18.x"
+        "node": "20.x"
     },
     "scripts": {
         "install-client": "cd client && npm install",
