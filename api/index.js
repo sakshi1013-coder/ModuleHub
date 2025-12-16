@@ -25,13 +25,14 @@ const mockIO = {
 };
 app.set('io', mockIO);
 
-// Routes - Vercel automatically handles /api prefix, so routes should include it
+// Routes - Vercel passes the full path including /api to the serverless function
+// So routes should be mounted with /api prefix to match incoming requests
 app.use('/api/auth', require('../server/routes/auth.routes'));
 app.use('/api/packages', require('../server/routes/package.routes'));
 app.use('/api/notifications', require('../server/routes/notification.routes'));
 
 // Health check
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
   res.json({ message: 'ModuleHub API is running' });
 });
 

@@ -11,9 +11,6 @@ exports.publishPackage = async (req, res) => {
         const { name, description, version, documentation, dependencies } = req.body;
         const io = req.app.get('io');
         console.log('[publishPackage] IO instance:', !!io);
-        
-        // Socket.IO won't work in serverless, so we'll skip real-time notifications
-        // Notifications are still saved to the database
 
         // Ensure user is company admin
         const user = await User.findById(req.user.id).populate('company');
@@ -58,19 +55,15 @@ exports.publishPackage = async (req, res) => {
             console.log('[publishPackage] Notifications inserted');
         }
 
-        // 2. Emit Socket Event (only if io is available - won't work in serverless)
-        if (io && typeof io.to === 'function') {
-            const room = user.company._id.toString();
-            console.log('[publishPackage] Emitting to room:', room);
-            io.to(room).emit('notification', {
-                type: 'new-package',
-                title: `New Package: ${name}`,
-                message: `${name} v${version} has been published.`
-            });
-            console.log('[publishPackage] Emitted');
-        } else {
-            console.log('[publishPackage] Socket.IO not available (serverless mode)');
-        }
+        // 2. Emit Socket Event
+        const room = user.company._id.toString();
+        console.log('[publishPackage] Emitting to room:', room);
+        io.to(room).emit('notification', {
+            type: 'new-package',
+            title: `New Package: ${name}`,
+            message: `${name} v${version} has been published.`
+        });
+        console.log('[publishPackage] Emitted');
 
         res.json(newPackage);
 
@@ -116,19 +109,15 @@ exports.publishVersion = async (req, res) => {
 
         if (notifications.length > 0) await Notification.insertMany(notifications);
 
-        // Emit to specific user rooms (if they are online) - only if io is available
-        if (io && typeof io.to === 'function') {
-            subscribers.forEach(sub => {
-                io.to(sub._id.toString()).emit('notification', {
-                    type: 'version-update',
-                    title: `Update: ${pkg.name}`,
-                    message: `${pkg.name} updated to v${version}.`,
-                    relatedPackage: pkg._id
-                });
+        // Emit to specific user rooms (if they are online)
+        subscribers.forEach(sub => {
+            io.to(sub._id.toString()).emit('notification', {
+                type: 'version-update',
+                title: `Update: ${pkg.name}`,
+                message: `${pkg.name} updated to v${version}.`,
+                relatedPackage: pkg._id
             });
-        } else {
-            console.log('[publishVersion] Socket.IO not available (serverless mode)');
-        }
+        });
 
         res.json(pkg);
 
