@@ -38,8 +38,12 @@ exports.publishPackage = async (req, res) => {
         await newPackage.save();
         console.log('[publishPackage] Package saved:', newPackage._id);
 
-        // NOTIFICATIONS
-        const employees = await User.find({ company: user.company._id, _id: { $ne: req.user.id } });
+        // NOTIFICATIONS - Only notify employees, not company admins
+        const employees = await User.find({ 
+            company: user.company._id, 
+            accountType: 'employee',
+            _id: { $ne: req.user.id } 
+        });
         console.log('[publishPackage] Employees to notify:', employees.length);
 
         const notifications = employees.map(emp => ({
@@ -95,9 +99,12 @@ exports.publishVersion = async (req, res) => {
         });
         await pkg.save();
 
-        // Notify Subscribers
-        // Find users who have subscribed to this package
-        const subscribers = await User.find({ subscriptions: pkg._id });
+        // Notify Subscribers - Only notify employees, not company admins
+        // Find employees who have subscribed to this package
+        const subscribers = await User.find({ 
+            subscriptions: pkg._id,
+            accountType: 'employee'
+        });
 
         const notifications = subscribers.map(sub => ({
             recipient: sub._id,

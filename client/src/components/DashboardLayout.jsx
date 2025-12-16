@@ -6,7 +6,7 @@ const DashboardLayout = ({ Sidebar, children }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
 
     return (
-        <div className="flex min-h-screen bg-lionsmane text-midnight pt-16">
+        <div className="flex min-h-screen bg-lionsmane text-midnight pt-20">
             {/* Mobile Sidebar Toggle */}
             <button
                 onClick={() => setSidebarOpen(true)}
@@ -23,8 +23,10 @@ const DashboardLayout = ({ Sidebar, children }) => {
                         animate={{ x: 0, opacity: 1 }}
                         exit={{ x: -300, opacity: 0 }}
                         transition={{ duration: 0.3, ease: "easeInOut" }}
-                        className={`fixed lg:static inset-y-0 left-0 z-40 w-64 bg-white border-r border-celeste p-4 transform lg:transform-none pt-20 lg:pt-4 overflow-y-auto block shadow-sm`}
-                        style={{ display: isSidebarOpen ? 'block' : undefined }} // Hydration fix helper
+                        className={`fixed lg:static left-0 z-40 w-64 bg-white border-r border-celeste p-4 overflow-y-auto block shadow-sm dashboard-sidebar`}
+                        style={{ 
+                            display: isSidebarOpen ? 'block' : undefined,
+                        }}
                     >
                         {/* Close Button Mobile */}
                         <button

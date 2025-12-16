@@ -51,3 +51,18 @@
     transform: scale(1.15);
   }
 }
+
+/* Dashboard sidebar positioning */
+@media (max-width: 1023px) {
+  .dashboard-sidebar {
+    top: 80px !important;
+    bottom: 0 !important;
+    height: calc(100vh - 80px) !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .dashboard-sidebar {
+    height: calc(100vh - 80px) !important;
+  }
+}

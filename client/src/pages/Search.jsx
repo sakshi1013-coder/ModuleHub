@@ -3,30 +3,44 @@ import { useSearchParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import { Search as SearchIcon, Package, Shield, Clock } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { searchItems } from '../utils/searchAlgorithm';
 
 const Search = () => {
     const [searchParams, setSearchParams] = useSearchParams();
     const query = searchParams.get('q') || '';
     const [searchTerm, setSearchTerm] = useState(query);
+    const [allPackages, setAllPackages] = useState([]);
     const [results, setResults] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    // Fetch all packages once
     useEffect(() => {
-        fetchComponents(query);
+        const fetchAllPackages = async () => {
+            setLoading(true);
+            try {
+                const res = await api.get('/packages');
+                setAllPackages(res.data);
+            } catch (err) {
+                console.error(err);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchAllPackages();
+    }, []);
+
+    // Sync searchTerm with URL query
+    useEffect(() => {
+        setSearchTerm(query);
     }, [query]);
 
-    const fetchComponents = async (term) => {
-        setLoading(true);
-        try {
-            // If term is empty, it returns all
-            const res = await api.get(`/components?search=${term}`);
-            setResults(res.data);
-        } catch (err) {
-            console.error(err);
-        } finally {
-            setLoading(false);
+    // Apply search algorithm when query or packages change
+    useEffect(() => {
+        if (allPackages.length > 0) {
+            const filtered = searchItems(allPackages, query);
+            setResults(filtered);
         }
-    };
+    }, [query, allPackages]);
 
     const handleSearch = (e) => {
         e.preventDefault();

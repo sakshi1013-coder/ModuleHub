@@ -63,7 +63,7 @@ const Signup = () => {
     };
 
     return (
-        <div className="flex justify-center items-center min-h-[80vh] relative">
+        <div className="flex justify-center items-center min-h-[80vh] relative pt-20">
             {/* Modal Overlay */}
             {successData && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
