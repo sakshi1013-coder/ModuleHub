@@ -10,7 +10,9 @@ const useSocket = () => {
     useEffect(() => {
         if (user && user.company && !socket) {
             // Initialize Socket
-            const newSocket = io('http://localhost:5001');
+            // In production, connect to the same origin (relative) but Socket.IO needs absolute usually or logic to fallback
+            const socketUrl = import.meta.env.PROD ? window.location.origin : 'http://localhost:5001';
+            const newSocket = io(socketUrl);
 
             // Join Company Room
             const companyId = user.company._id || user.company;

@@ -76,8 +76,10 @@ app.get('/', (req, res) => {
 const PORT = process.env.PORT || 5001;
 
 // Only listen if not in test mode
-if (process.env.NODE_ENV !== 'test') {
+// Only listen if running directly (not imported as a module/serverless function)
+if (require.main === module) {
   server.listen(PORT, () => console.log(`Server running on port ${PORT} `));
 }
 
-module.exports = { app, server }; // Export server for tests
+// Export for Vercel
+module.exports = app;
