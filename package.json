@@ -9,5 +9,14 @@
         "install-server": "cd server && npm install",
         "build": "npm run install-client && npm run install-server && cd client && npm run build && cd .. && mkdir -p dist && cp -r client/dist/* dist/",
         "start": "node server/server.js"
+    },
+    "dependencies": {
+        "bcryptjs": "^3.0.3",
+        "cors": "^2.8.5",
+        "dotenv": "^17.2.3",
+        "express": "^5.2.1",
+        "jsonwebtoken": "^9.0.3",
+        "mongoose": "^8.20.3",
+        "socket.io": "^4.8.1"
     }
 }
