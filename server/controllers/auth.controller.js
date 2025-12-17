@@ -62,6 +62,9 @@ exports.register = async (req, res) => {
                 members: []
             });
 
+            // Save company first before creating user
+            await company.save();
+
             userRole = 'admin';
 
         } else {
@@ -90,20 +93,17 @@ exports.register = async (req, res) => {
         await newUser.save();
 
         // 4. Update Company Members
-        // If accountType was company, we haven't saved 'company' yet.
-        // If employee, 'company' exists.
-
-        if (accountType === 'company') {
-            company.members.push(newUser._id);
-            await company.save();
-        } else {
-            company.members.push(newUser._id);
-            await company.save();
-        }
+        company.members.push(newUser._id);
+        await company.save();
 
         // 5. Token
+        const jwtSecret = process.env.JWT_SECRET;
+        if (!jwtSecret) {
+            console.error('ERROR: JWT_SECRET environment variable is not set');
+            return res.status(500).json({ msg: 'Server configuration error' });
+        }
         const payload = { user: { id: newUser.id } };
-        jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: 360000 }, (err, token) => {
+        jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
             if (err) throw err;
             res.json({
                 token,
@@ -114,8 +114,9 @@ exports.register = async (req, res) => {
         });
 
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Registration error:', err);
+        const errorMessage = err.message || 'Server Error';
+        res.status(500).json({ msg: errorMessage, error: errorMessage });
     }
 };
 
@@ -128,8 +129,13 @@ exports.login = async (req, res) => {
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({ msg: 'Invalid Credentials' });
 
+        const jwtSecret = process.env.JWT_SECRET;
+        if (!jwtSecret) {
+            console.error('ERROR: JWT_SECRET environment variable is not set');
+            return res.status(500).json({ msg: 'Server configuration error' });
+        }
         const payload = { user: { id: user.id } };
-        jwt.sign(payload, process.env.JWT_SECRET || 'secret', { expiresIn: 360000 }, (err, token) => {
+        jwt.sign(payload, jwtSecret, { expiresIn: 360000 }, (err, token) => {
             if (err) throw err;
             res.json({
                 token,
@@ -138,8 +144,9 @@ exports.login = async (req, res) => {
             });
         });
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('Login error:', err);
+        const errorMessage = err.message || 'Server Error';
+        res.status(500).json({ msg: errorMessage, error: errorMessage });
     }
 };
 
@@ -148,7 +155,8 @@ exports.getMe = async (req, res) => {
         const user = await User.findById(req.user.id).select('-password').populate('company');
         res.json(user);
     } catch (err) {
-        console.error(err.message);
-        res.status(500).send('Server Error');
+        console.error('GetMe error:', err);
+        const errorMessage = err.message || 'Server Error';
+        res.status(500).json({ msg: errorMessage, error: errorMessage });
     }
 };

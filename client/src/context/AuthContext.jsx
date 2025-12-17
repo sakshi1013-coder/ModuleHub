@@ -29,22 +29,40 @@ export const AuthProvider = ({ children }) => {
     const login = async (email, password) => {
         try {
             const res = await api.post('/auth/login', { email, password });
-            localStorage.setItem('token', res.data.token);
-            setUser(res.data.user);
-            return { success: true };
+            if (res.data.token && res.data.user) {
+                localStorage.setItem('token', res.data.token);
+                setUser(res.data.user);
+                return { success: true };
+            } else {
+                return { success: false, error: 'Invalid response from server' };
+            }
         } catch (err) {
-            return { success: false, error: err.response?.data?.msg || 'Login failed' };
+            console.error('Login error:', err);
+            const errorMessage = err.response?.data?.msg || 
+                               err.response?.data?.error || 
+                               err.message || 
+                               'Login failed. Please check your credentials.';
+            return { success: false, error: errorMessage };
         }
     };
 
     const register = async (formData) => {
         try {
             const res = await api.post('/auth/register', formData);
-            localStorage.setItem('token', res.data.token);
-            setUser(res.data.user);
-            return { success: true, companyCode: res.data.companyCode }; // Return code if new company
+            if (res.data.token && res.data.user) {
+                localStorage.setItem('token', res.data.token);
+                setUser(res.data.user);
+                return { success: true, companyCode: res.data.companyCode }; // Return code if new company
+            } else {
+                return { success: false, error: 'Invalid response from server' };
+            }
         } catch (err) {
-            return { success: false, error: err.response?.data?.msg || 'Registration failed' };
+            console.error('Registration error:', err);
+            const errorMessage = err.response?.data?.msg || 
+                               err.response?.data?.error || 
+                               err.message || 
+                               'Registration failed. Please try again.';
+            return { success: false, error: errorMessage };
         }
     };
 
