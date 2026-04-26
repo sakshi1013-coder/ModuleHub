@@ -23,6 +23,9 @@ export const AuthProvider = ({ children }) => {
                 } finally {
                     if (window.hideLoader) window.hideLoader();
                 }
+            } else {
+                // Hide the bootstrapping loader if no token exists
+                if (window.hideLoader) window.hideLoader();
             }
             setLoading(false);
         };
