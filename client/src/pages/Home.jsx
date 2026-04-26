@@ -351,7 +351,7 @@ const Home = () => {
                         </div>
                     </div>
                     <div className="border-t border-celeste pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-                        <p>© 2024 ModuleHub Inc. All rights reserved.</p>
+                        <p>© 2026 ModuleHub Inc. All rights reserved.</p>
                         <div className="flex gap-6">
                             <a href="#" className="hover:text-midnight transition-colors">Privacy Policy</a>
                             <a href="#" className="hover:text-midnight transition-colors">Terms of Service</a>
