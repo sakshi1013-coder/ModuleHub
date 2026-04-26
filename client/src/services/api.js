@@ -15,22 +15,49 @@ const api = axios.create({
     }
 });
 
+let apiRequestsCount = 0;
+
 // Add a request interceptor to add token
 api.interceptors.request.use(
     config => {
+        apiRequestsCount++;
+        if (window.showLoader && apiRequestsCount === 1) {
+            window.showLoader();
+        }
+        
         const token = localStorage.getItem('token');
         if (token) {
             config.headers['x-auth-token'] = token;
         }
         return config;
     },
-    error => Promise.reject(error)
+    error => {
+        apiRequestsCount--;
+        if (apiRequestsCount <= 0 && window.hideLoader) {
+            apiRequestsCount = 0;
+            window.hideLoader();
+        }
+        return Promise.reject(error);
+    }
 );
 
 // Add a response interceptor to handle errors
 api.interceptors.response.use(
-    response => response,
+    response => {
+        apiRequestsCount--;
+        if (apiRequestsCount <= 0 && window.hideLoader) {
+            apiRequestsCount = 0;
+            window.hideLoader();
+        }
+        return response;
+    },
     error => {
+        apiRequestsCount--;
+        if (apiRequestsCount <= 0 && window.hideLoader) {
+            apiRequestsCount = 0;
+            window.hideLoader();
+        }
+        
         // Log network errors for debugging
         if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
             console.error('Network error - API server may be down or URL incorrect:', baseURL);

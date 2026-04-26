@@ -13,12 +13,15 @@ export const AuthProvider = ({ children }) => {
         const loadUser = async () => {
             const token = localStorage.getItem('token');
             if (token) {
+                if (window.showLoader) window.showLoader('Connecting to registry...');
                 try {
                     const res = await api.get('/auth/me');
                     setUser(res.data);
                 } catch (err) {
                     console.error(err);
                     localStorage.removeItem('token');
+                } finally {
+                    if (window.hideLoader) window.hideLoader();
                 }
             }
             setLoading(false);

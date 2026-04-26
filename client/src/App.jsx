@@ -9,6 +9,7 @@ import Docs from './pages/Docs';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { ToastContainer } from './components/NotificationToast';
 import ProtectedRoute from './components/ProtectedRoute';
+import GlobalLoader from './components/GlobalLoader';
 
 // Dashboards
 import CompanyDashboard from './pages/company/CompanyDashboard';
@@ -33,6 +34,7 @@ const DashboardRedirect = () => {
 function App() {
   return (
     <AuthProvider>
+      <GlobalLoader />
       <div className="min-h-screen bg-lionsmane text-midnight font-sans selection:bg-marigold/30">
         <Navbar />
         <div className="relative z-10">
