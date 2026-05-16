@@ -1,40 +1,65 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const cors = require('cors');
-require('dotenv').config();
+const dbConnect = require('./lib/dbConnect');
+
+// Load .env only in local dev (Vercel injects env vars directly in production)
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const app = express();
 
-// Middleware
+// ── Middleware ────────────────────────────────────────────────────────────────
 app.use(cors());
 app.use(express.json());
 
-// Database Connection
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/modulehub';
-mongoose.connect(MONGODB_URI)
-  .then(() => console.log('MongoDB Connected'))
-  .catch(err => console.log('MongoDB Connection Error:', err));
+/**
+ * DB-connection middleware — runs before every request.
+ *
+ * Awaits dbConnect() which either:
+ *   • Returns the cached connection instantly (warm invocation)
+ *   • Opens and awaits a new connection (cold start)
+ *
+ * This guarantees Mongoose is fully connected before any query runs,
+ * eliminating the "buffering timed out" error in serverless environments.
+ */
+app.use(async (req, res, next) => {
+  try {
+    await dbConnect();
+    next();
+  } catch (err) {
+    console.error('DB connection middleware error:', err.message);
+    res.status(503).json({
+      msg: 'Database unavailable. Please try again shortly.',
+      error: err.message
+    });
+  }
+});
 
-// Create a mock Socket.IO instance for serverless (Socket.IO doesn't work in serverless)
-// This prevents crashes when controllers try to use req.app.get('io')
+// ── Mock Socket.IO ────────────────────────────────────────────────────────────
+// Socket.IO doesn't work in serverless. This mock prevents crashes in
+// controllers that call req.app.get('io').to(...).emit(...)
 const mockIO = {
-  to: () => mockIO,
-  emit: () => {},
-  on: () => {},
-  join: () => {}
+  to: function () { return mockIO; },
+  emit: function () {},
+  on:   function () {},
+  join: function () {}
 };
 app.set('io', mockIO);
 
-// Routes - Vercel passes the full path including /api to the serverless function
-// So routes should be mounted with /api prefix to match incoming requests
-app.use('/api/auth', require('../server/routes/auth.routes'));
-app.use('/api/packages', require('../server/routes/package.routes'));
+// ── Routes ────────────────────────────────────────────────────────────────────
+// Vercel forwards the full /api/... path to this function, so mount with prefix
+app.use('/api/auth',          require('../server/routes/auth.routes'));
+app.use('/api/packages',      require('../server/routes/package.routes'));
 app.use('/api/notifications', require('../server/routes/notification.routes'));
 
-// Health check
-app.get('/', (req, res) => {
-  res.json({ message: 'ModuleHub API is running' });
+// ── Health check ──────────────────────────────────────────────────────────────
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'ModuleHub API is running',
+    timestamp: new Date().toISOString()
+  });
 });
 
-// Export for Vercel serverless
+// ── Export for Vercel serverless ──────────────────────────────────────────────
 module.exports = app;
