@@ -6,8 +6,8 @@ import axios from 'axios';
 // - In production (Vercel), the backend runs as a serverless function at /api
 //   on the same domain, so we use a relative URL (no hardcoded host needed)
 const baseURL =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.DEV ? 'http://localhost:5001/api' : '/api');
+    import.meta.env.VITE_API_URL ||
+    (import.meta.env.DEV ? 'https://modulehub.onrender.com' : '/api');
 
 const api = axios.create({
     baseURL: baseURL,
@@ -25,7 +25,7 @@ api.interceptors.request.use(
         if (window.showLoader && apiRequestsCount === 1) {
             window.showLoader();
         }
-        
+
         const token = localStorage.getItem('token');
         if (token) {
             config.headers['x-auth-token'] = token;
@@ -58,7 +58,7 @@ api.interceptors.response.use(
             apiRequestsCount = 0;
             window.hideLoader();
         }
-        
+
         // Log network errors for debugging
         if (error.code === 'ERR_NETWORK' || error.message === 'Network Error') {
             console.error('Network error - API server may be down or URL incorrect:', baseURL);
