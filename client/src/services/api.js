@@ -6,8 +6,7 @@ import axios from 'axios';
 // - In production (Vercel), the backend runs as a serverless function at /api
 //   on the same domain, so we use a relative URL (no hardcoded host needed)
 const baseURL =
-    import.meta.env.VITE_API_URL ||
-    (import.meta.env.DEV ? 'https://modulehub.onrender.com' : '/api');
+    import.meta.env.VITE_API_BASE_URL || 'https://modulehub.onrender.com';
 
 const api = axios.create({
     baseURL: baseURL,
