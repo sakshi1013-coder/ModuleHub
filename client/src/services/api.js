@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 // Base URL for API requests
-// - Prefer VITE_API_URL when explicitly provided
-// - In development, default to local backend on port 5001
-// - In production (Vercel), the backend runs as a serverless function at /api
-//   on the same domain, so we use a relative URL (no hardcoded host needed)
+// - Use VITE_API_BASE_URL if explicitly set (e.g. for pointing to Render)
+// - Otherwise fall back to relative '/api' which:
+//     • In development → Vite proxy forwards to http://localhost:5001/api
+//     • In production (Vercel) → same-domain /api serverless function
 const baseURL =
-    import.meta.env.VITE_API_BASE_URL || 'https://modulehub.onrender.com/api';
+    import.meta.env.VITE_API_BASE_URL || '/api';
 
 const api = axios.create({
     baseURL: baseURL,
