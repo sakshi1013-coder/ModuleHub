@@ -1,9 +1,13 @@
 import React, { useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Search, Shield, Zap, RefreshCw, ChevronRight, Check, Package, Layers, Bell, GitBranch, Terminal, Code2, ArrowRight } from 'lucide-react';
+import { Search, Shield, Zap, RefreshCw, ChevronRight, Check, Package, Layers, Bell, GitBranch, Terminal, Code2, ArrowRight, LayoutDashboard } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Home = () => {
+    const { user } = useAuth();
+    const dashboardPath = user?.accountType === 'company' ? '/company/dashboard' : '/employee/dashboard';
+
     return (
         <div className="flex flex-col min-h-screen">
             {/* Hero Section */}
@@ -19,19 +23,40 @@ const Home = () => {
                 </div>
 
                 <div className="relative container mx-auto px-4 text-center z-10">
-                    <motion.div
-                        initial={{ opacity: 0, scale: 0.9 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 0.5 }}
-                        className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-celeste text-sm font-medium text-midnight mb-8 hover:bg-white transition-colors cursor-pointer shadow-sm"
-                    >
-                        <span className="relative flex h-2 w-2">
-                            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-herb opacity-75"></span>
-                            <span className="relative inline-flex rounded-full h-2 w-2 bg-herb"></span>
-                        </span>
-                        v2.0 is now live
-                        <ChevronRight size={14} />
-                    </motion.div>
+                    {user ? (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.4 }}
+                            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/90 border border-herb/30 text-sm font-medium text-midnight mb-8 shadow-sm"
+                        >
+                            <span className="relative flex h-2.5 w-2.5">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-herb opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-herb"></span>
+                            </span>
+                            <span>Signed in as <strong className="text-midnight">{user.username || user.name || 'User'}</strong></span>
+                            <span className="px-2 py-0.5 text-xs font-semibold rounded-full bg-midnight/10 text-midnight uppercase tracking-wider">
+                                {user.accountType === 'company' ? 'Company Admin' : 'Employee'}
+                            </span>
+                            <Link to={dashboardPath} className="text-xs font-semibold text-herb-700 hover:text-midnight flex items-center gap-0.5 ml-1 transition-colors">
+                                Dashboard <ChevronRight size={14} />
+                            </Link>
+                        </motion.div>
+                    ) : (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            transition={{ duration: 0.5 }}
+                            className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 border border-celeste text-sm font-medium text-midnight mb-8 hover:bg-white transition-colors cursor-pointer shadow-sm"
+                        >
+                            <span className="relative flex h-2 w-2">
+                                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-herb opacity-75"></span>
+                                <span className="relative inline-flex rounded-full h-2 w-2 bg-herb"></span>
+                            </span>
+                            v2.0 is now live
+                            <ChevronRight size={14} />
+                        </motion.div>
+                    )}
 
                     <motion.h1
                         initial={{ opacity: 0, y: 20 }}
@@ -57,14 +82,34 @@ const Home = () => {
                         transition={{ delay: 0.2 }}
                         className="flex flex-col sm:flex-row items-center justify-center gap-4"
                     >
-                        <Link to="/search" className="btn-primary flex items-center gap-2 group">
-                            Explore Packages
-                            <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
-                        </Link>
-                        <a href="#" className="btn-secondary flex items-center gap-2">
-                            <Terminal size={18} />
-                            Read the Docs
-                        </a>
+                        {user ? (
+                            <>
+                                <Link to={dashboardPath} className="btn-primary flex items-center gap-2 group shadow-md">
+                                    <LayoutDashboard size={18} />
+                                    Go to {user.accountType === 'company' ? 'Company Dashboard' : 'Employee Dashboard'}
+                                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                                <Link to="/search" className="btn-secondary flex items-center gap-2">
+                                    <Search size={18} />
+                                    Explore Packages
+                                </Link>
+                                <Link to="/docs" className="btn-secondary flex items-center gap-2">
+                                    <Terminal size={18} />
+                                    Read Docs
+                                </Link>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/search" className="btn-primary flex items-center gap-2 group">
+                                    Explore Packages
+                                    <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                                <Link to="/docs" className="btn-secondary flex items-center gap-2">
+                                    <Terminal size={18} />
+                                    Read the Docs
+                                </Link>
+                            </>
+                        )}
                     </motion.div>
                 </div>
             </section>
@@ -302,20 +347,42 @@ const Home = () => {
                         transition={{ duration: 0.6, delay: 0.2 }}
                         className="flex-1 w-full max-w-md"
                     >
-                        <form className="glass-card p-8 rounded-2xl">
-                            <h3 className="text-2xl font-bold mb-6 text-midnight">Get in touch</h3>
-                            <div className="space-y-4">
-                                <div>
-                                    <label className="block text-sm font-medium text-midnight/60 mb-1">Full Name</label>
-                                    <input type="text" className="w-full bg-white border border-celeste rounded-lg px-4 py-3 text-midnight focus:outline-none focus:border-midnight transition-colors" placeholder="John Doe" />
+                        {user ? (
+                            <div className="glass-card p-8 rounded-2xl border border-celeste bg-white/90 text-center shadow-lg">
+                                <div className="bg-herb/15 w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5 text-herb border border-herb/20">
+                                    <LayoutDashboard size={28} />
                                 </div>
-                                <div>
-                                    <label className="block text-sm font-medium text-midnight/60 mb-1">Work Email</label>
-                                    <input type="email" className="w-full bg-white border border-celeste rounded-lg px-4 py-3 text-midnight focus:outline-none focus:border-midnight transition-colors" placeholder="john@company.com" />
+                                <h3 className="text-2xl font-bold mb-2 text-midnight">You are signed in</h3>
+                                <p className="text-midnight/70 mb-6 text-sm leading-relaxed">
+                                    Continue managing your internal registry as <strong className="text-midnight">{user.username || user.name || 'User'}</strong> ({user.accountType === 'company' ? 'Company Admin' : 'Employee'}).
+                                </p>
+                                <div className="flex flex-col gap-3">
+                                    <Link to={dashboardPath} className="w-full btn-primary flex items-center justify-center gap-2">
+                                        <LayoutDashboard size={18} />
+                                        Open Your Dashboard
+                                    </Link>
+                                    <Link to="/search" className="w-full btn-secondary flex items-center justify-center gap-2">
+                                        <Search size={18} />
+                                        Browse Packages
+                                    </Link>
                                 </div>
-                                <button type="button" className="w-full btn-primary mt-2">Contact Sales</button>
                             </div>
-                        </form>
+                        ) : (
+                            <form className="glass-card p-8 rounded-2xl">
+                                <h3 className="text-2xl font-bold mb-6 text-midnight">Get in touch</h3>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="block text-sm font-medium text-midnight/60 mb-1">Full Name</label>
+                                        <input type="text" className="w-full bg-white border border-celeste rounded-lg px-4 py-3 text-midnight focus:outline-none focus:border-midnight transition-colors" placeholder="John Doe" />
+                                    </div>
+                                    <div>
+                                        <label className="block text-sm font-medium text-midnight/60 mb-1">Work Email</label>
+                                        <input type="email" className="w-full bg-white border border-celeste rounded-lg px-4 py-3 text-midnight focus:outline-none focus:border-midnight transition-colors" placeholder="john@company.com" />
+                                    </div>
+                                    <button type="button" className="w-full btn-primary mt-2">Contact Sales</button>
+                                </div>
+                            </form>
+                        )}
                     </motion.div>
                 </div>
             </section>

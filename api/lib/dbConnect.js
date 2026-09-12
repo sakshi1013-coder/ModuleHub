@@ -12,14 +12,6 @@
  */
 const mongoose = require('mongoose');
 
-const MONGODB_URI = process.env.MONGODB_URI;
-
-if (!MONGODB_URI) {
-  throw new Error(
-    'Please define the MONGODB_URI environment variable in Vercel project settings.'
-  );
-}
-
 // Module-level cache — survives across warm invocations of the same instance
 let cached = global._mongooseCache;
 
@@ -28,6 +20,14 @@ if (!cached) {
 }
 
 async function dbConnect() {
+  const MONGODB_URI = process.env.MONGODB_URI;
+
+  if (!MONGODB_URI) {
+    throw new Error(
+      'MONGODB_URI environment variable is missing. Please configure MONGODB_URI in your Vercel project settings.'
+    );
+  }
+
   // Already connected — return immediately
   if (cached.conn) {
     return cached.conn;

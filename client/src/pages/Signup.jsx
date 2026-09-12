@@ -55,7 +55,7 @@ const Signup = () => {
                 });
             } else {
                 toast.success('Welcome to the team!');
-                navigate('/');
+                navigate('/employee/dashboard');
             }
         } else {
             toast.error(res.error);
@@ -73,7 +73,7 @@ const Signup = () => {
                         className="bg-white border border-celeste rounded-2xl p-6 max-w-sm w-full relative shadow-2xl"
                     >
                         <button
-                            onClick={() => navigate('/')}
+                            onClick={() => navigate('/company/dashboard')}
                             className="absolute top-4 right-4 text-midnight/60 hover:text-midnight transition-colors"
                         >
                             <span className="sr-only">Close</span>
@@ -97,7 +97,7 @@ const Signup = () => {
                             </div>
 
                             <button
-                                onClick={() => navigate('/')}
+                                onClick={() => navigate('/company/dashboard')}
                                 className="w-full bg-midnight hover:bg-midnight-600 text-white font-medium py-2.5 rounded-lg transition-all text-sm"
                             >
                                 Go to Dashboard

@@ -13,8 +13,16 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// ── Health check ──────────────────────────────────────────────────────────────
+app.get('/api', (req, res) => {
+  res.json({
+    message: 'ModuleHub API is running',
+    timestamp: new Date().toISOString()
+  });
+});
+
 /**
- * DB-connection middleware — runs before every request.
+ * DB-connection middleware — runs before every data request.
  *
  * Awaits dbConnect() which either:
  *   • Returns the cached connection instantly (warm invocation)
@@ -30,7 +38,7 @@ app.use(async (req, res, next) => {
   } catch (err) {
     console.error('DB connection middleware error:', err.message);
     res.status(503).json({
-      msg: 'Database unavailable. Please try again shortly.',
+      msg: 'Database unavailable. Please configure MONGODB_URI in Vercel project settings.',
       error: err.message
     });
   }
@@ -52,14 +60,6 @@ app.set('io', mockIO);
 app.use('/api/auth',          require('../server/routes/auth.routes'));
 app.use('/api/packages',      require('../server/routes/package.routes'));
 app.use('/api/notifications', require('../server/routes/notification.routes'));
-
-// ── Health check ──────────────────────────────────────────────────────────────
-app.get('/api', (req, res) => {
-  res.json({
-    message: 'ModuleHub API is running',
-    timestamp: new Date().toISOString()
-  });
-});
 
 // ── Export for Vercel serverless ──────────────────────────────────────────────
 module.exports = app;

@@ -38,7 +38,7 @@ export const AuthProvider = ({ children }) => {
             if (res.data.token && res.data.user) {
                 localStorage.setItem('token', res.data.token);
                 setUser(res.data.user);
-                return { success: true };
+                return { success: true, user: res.data.user };
             } else {
                 return { success: false, error: 'Invalid response from server' };
             }
@@ -58,7 +58,7 @@ export const AuthProvider = ({ children }) => {
             if (res.data.token && res.data.user) {
                 localStorage.setItem('token', res.data.token);
                 setUser(res.data.user);
-                return { success: true, companyCode: res.data.companyCode }; // Return code if new company
+                return { success: true, user: res.data.user, companyCode: res.data.companyCode }; // Return code if new company
             } else {
                 return { success: false, error: 'Invalid response from server' };
             }

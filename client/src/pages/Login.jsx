@@ -11,15 +11,14 @@ const Login = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // We pass accountType contextually, though backend finds user by email. 
-        // We could verify on frontend if needed, but auto-redirect handles it.
         const res = await login(formData.email, formData.password);
         if (res.success) {
-            toast.success('Logged in successfully');
-            if (accountType === 'company') {
+            const userType = res.user?.accountType || accountType;
+            toast.success(`Welcome back, ${res.user?.username || 'user'}!`);
+            if (userType === 'company') {
                 navigate('/company/dashboard');
             } else {
-                navigate('/');
+                navigate('/employee/dashboard');
             }
         } else {
             toast.error(res.error);
